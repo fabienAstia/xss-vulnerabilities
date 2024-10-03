@@ -1,20 +1,20 @@
 <script setup>
     import {ref} from 'vue'
-    const bypass = ref('')
+    const payload = ref('')
 </script>
 
 <template>
-    <h1>How to illustrate XSS vulnerabilities</h1>
+    <h1>Try a payload</h1>
     <div class="m-3">
         <h4>Window</h4>
         <div class="window p-3">
-                {{ bypass}}
+                {{ payload}}
         </div>
     </div>
 
     <div class="m-3">
-        <label for="">Try a bypass: </label>
-        <input type="text"  class="form-control" v-model="bypass">
+        <label for="">Try a payload: </label>
+        <input type="text"  class="form-control" v-model="payload">
         <button class="btn btn-primary mt-3">submit </button>
     </div>
    
@@ -23,8 +23,12 @@
         <button class="btn btn-primary mt-3">submit </button>
     </div>
     
-   
 </template>
+
+
+<!-- script XSS im trying to send -->
+ <script></script>
+
 
 <style scoped>
     .window{
