@@ -1,26 +1,33 @@
 <script setup>
     import {ref} from 'vue'
     const payload = ref('')
+    const injectHtml = ref('')
 </script>
 
 <template>
     <h1>Try a payload</h1>
     <div class="m-3">
         <h4>Window</h4>
-        <div class="window p-3">
-                {{ payload}}
+        <div class="window p-3" >
+                {{ payload}} 
+                <p v-html="injectHtml"></p>
         </div>
     </div>
 
     <div class="m-3">
-        <label for="">Try a payload: </label>
+        <label for="">GoodVue- Try a payload: </label>
         <input type="text"  class="form-control" v-model="payload">
         <button class="btn btn-primary mt-3">submit </button>
     </div>
    
-    <div class="m-3">
-        <textarea name="" id="" class="form-control"></textarea>
+    <div class="m-3" >
+        <label for="">BadVue- Try a payload:</label>
+        <textarea name="" id="" class="form-control" v-model="injectHtml"></textarea>
         <button class="btn btn-primary mt-3">submit </button>
+    </div>
+
+    <div >
+
     </div>
     
 </template>
@@ -32,7 +39,7 @@
 
 <style scoped>
     .window{
-        height: 200px;
+        height: 180px;
         border: 2px solid black;
     }
 </style>
