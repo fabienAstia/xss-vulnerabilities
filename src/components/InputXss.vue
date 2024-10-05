@@ -5,7 +5,7 @@
 </script>
 
 <template>
-    <h1>Try a payload</h1>
+
     <div class="m-3">
         <h4>Window</h4>
         <div class="window p-3" >
@@ -33,8 +33,15 @@
 </template>
 
 
-<!-- script XSS im trying to send -->
- <script></script>
+<!-- SCRIPTS XSS -->
+ <!-- 
+Fucntionning :
+    HTML tags : strong, h1, h2..., input
+    <input type="text" value="whatever" style="background-color:red"></input>
+ -->
+
+ <!-- Not Fucntionning: -->
+<!-- <script>alert('youhou')</script> -->
 
 
 <style scoped>
