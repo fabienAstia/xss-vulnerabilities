@@ -1,51 +1,52 @@
 <script setup>
-    import {ref} from 'vue'
-    const payload = ref('')
-    const injectHtml = ref('')
-
-  
+import { ref } from 'vue'
+const payload = ref('')
+const injectHtml = ref('')
 </script>
 
 <template>
-
-    <section class="container">
-
+    <h3 class="m-3">Input XSS</h3>
+    <section>
         <div class="m-3">
             <h4>Window</h4>
-            <div class="window p-3" >
-                {{ payload}} 
+            <div class="window p-3">
+                {{ payload }}
                 <p v-html="injectHtml"></p>
             </div>
         </div>
-        
+
         <div class="m-3">
-            <label for="">GoodVue- Try a payload: </label>
-            <input type="text" class="form-control" v-model="payload">
+            <label for="good">GoodVue- Try a payload: </label>
+            <input type="text" id="good" class="form-control" v-model="payload">
             <button type="submit" class="btn btn-primary mt-3">submit </button>
         </div>
-        
-        <div class="m-3" >
-            <label for="">BadVue- Try a payload:</label>
-            <input name="" id="" class="form-control" v-model="injectHtml"></input>
+
+        <div class="m-3">
+            <label for="bad">BadVue- Try a payload:</label>
+            <textarea name="" id="bad" class="form-control" v-model="injectHtml"></textarea>
             <button type="submit" class="btn btn-primary mt-3">submit </button>
         </div>
-    </section>
+    </section> 
+    <router-link to="/submit-xss" class="btn btn-warning m-3">Next</router-link>
 </template>
 
 
-<!-- 
-SCRIPTS XSS
-
+<!-- SCRIPTS XSS
 Fucntionning :
+    //No XSS
     HTML tags : strong, h1, h2..., input
-    <input type="text" value="whatever" style="color:white; background-color:red"></input>
+    <input type="text" value="whatever" style="color:white; background-color:red"></input> => no XSS
+
+    //XSS Non-persistent (reflected)
     <img src=whatever onerror=alert('youhou')>
     <img src=whatever onerror="window.location='https://github.com/fabienAstia/xss-vulnerabilities/tree/main';">
     <img src=whatever onerror=console.log("Error is sucess")>
-    <img src/onerror=prompt('youhou')>
+    <img src/onerror=prompt('Sorry,&nbsp;an&nbsp;error&nbsp;was&nbsp;occur.&nbsp;Please,&nbsp;enter&nbsp;your&nbsp;Id&nbsp;to&nbsp;continue')>
+
+    //XSS DOM-based
     <a onmouseover="alert('youhou')"\>Click me!</a>
-    <a href="https://github.com/fabienAstia/xss-vulnerabilities/tree/main">clickme</a>
-    <a onclick=alert(document.cookie) href="#">Submit</a>
+    <a onmouseover="document.body.style='color:blue;'"\>Click me!</a>
+    <a onmouseover="document.body.style='transform:rotate(180deg);'"\>Click me!</a>
     
     Trying some Clickjacking :
     <style>
@@ -99,9 +100,8 @@ Fucntionning :
 
 
 <style scoped>
-    .window{
-        height: 180px;
-        border: 2px solid black;
-    }
+.window {
+    height: 180px;
+    border: 2px solid black;
+}
 </style>
-

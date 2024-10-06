@@ -1,18 +1,15 @@
 <script setup>
-import InputXss from './components/InputXss.vue'
+//import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <InputXss></InputXss>
+  <header class="container">
+    <h1 class="m-3">Workshop XSS</h1>
   </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+  <main class=" container">
+    <router-view /> </main>
 </template>
-
-
 
 <style scoped>
 
