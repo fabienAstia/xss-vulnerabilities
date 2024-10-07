@@ -2,9 +2,7 @@
 import { ref, onMounted } from 'vue';
 
 const pictureDuck = ref('');
-const countries = ref([]);
 
-// Fonction pour récupérer une image de canard
 async function fetchDucks() {
   try {
     const response = await fetch('https://random-d.uk/api/v2/randomimg');
@@ -13,17 +11,7 @@ async function fetchDucks() {
     console.error('Erreur lors de la récupération de l\'image :', error);
   }
 }
-
-// Fonction pour récupérer les pays
-async function fetchCountries() {
-  try {
-    const response = await fetch('https://restcountries.com/v3.1/all?fields=name');
-    const data = await response.json();
-    countries.value = data.map(country => country.name.common); // Stocker les pays
-  } catch (error) {
-    console.error('Erreur lors de la récupération des pays :', error);
-  }
-}
+//CORS error
 </script>
 
 <template>
@@ -39,11 +27,6 @@ async function fetchCountries() {
       <img :src="pictureDuck" alt="Duck Picture" />
     </div>
 
-    <button class="mt-3" type="button" @click="fetchCountries">Afficher les merveilleux pays du monde</button>
-
-    <ul v-if="countries.length > 0" id="target">
-      <li v-for="(country, index) in countries" :key="index">{{ country }}</li>
-    </ul>
   </section>
 </template>
 
