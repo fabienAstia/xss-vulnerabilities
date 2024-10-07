@@ -1,14 +1,11 @@
 <script setup>
 import { ref } from 'vue'
+import Search from './Search.vue'
 const listItem = ref('')
-
-function submitItem() {
-    document.getElementById('target').innerHTML = listItem.value;
-}
-
 </script>
+
 <template>
-    <h3 class="h4 m-3">List of Cross-Site Scripting Attacks</h3>
+    <h3 class="h3 m-3">List of Cross-Site Scripting Attacks</h3>
     <section>
         <ul class="m-3">
             <li>Reflected XSS Attacks</li>
@@ -22,7 +19,11 @@ function submitItem() {
             <button @click="submitItem" class="btn btn-primary mt-3">submit </button>
         </div>
     </section>
+
+    <Search/>
+
     <router-link to="/" class="btn btn-warning m-3">Back</router-link>
+
 </template>
 
 <!-- SCRIPTS XSS
