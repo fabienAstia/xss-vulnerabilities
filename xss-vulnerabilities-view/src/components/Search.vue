@@ -1,30 +1,35 @@
 <script setup>
-import { ref } from 'vue'
-import Search from './Search.vue'
-const listItem = ref('')
+import { ref, onMounted } from 'vue';
+
+const pictureDuck = ref('');
+
+async function fetchDucks() {
+  try {
+    const response = await fetch('https://random-d.uk/api/v2/randomimg');
+    pictureDuck.value = response.url;
+  } catch (error) {
+    console.error('Erreur lors de la récupération de l\'image :', error);
+  }
+}
+//CORS error
 </script>
 
 <template>
-    <h3 class="h3 m-3">List of Cross-Site Scripting Attacks</h3>
-    <section>
-        <ul class="m-3">
-            <li>Reflected XSS Attacks</li>
-            <li>DOM-based XSS Attacks!!</li>
-            <li id="target"></li>
-        </ul>
+  <section class="m-3">
+    <h4 class="h4">Don't be stuck</h4>
+    <form role="search">
+      <label for="veryBad">Finding a duck picture may help you</label>
+      <input class="form-control" type="search" id="veryBad" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success mt-3" type="button" @click="fetchDucks">Find</button>
+    </form>
 
-        <div class="m-3">
-            <label for="tooBad">Do you know other XSS Attacks ? Add it to the list</label>
-            <input type="text" id="tooBad" class="form-control" v-model="listItem" placeholder="New XSS">
-            <button @click="submitItem" class="btn btn-primary mt-3">submit </button>
-        </div>
-    </section>
+    <div v-if="pictureDuck" class="mt-3">
+      <img :src="pictureDuck" alt="Duck Picture" />
+    </div>
 
-    <Search/>
-
-    <router-link to="/" class="btn btn-warning m-3">Back</router-link>
-
+  </section>
 </template>
+
 
 <!-- SCRIPTS XSS
 Fucntionning :
