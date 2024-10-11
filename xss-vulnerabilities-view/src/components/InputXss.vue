@@ -34,7 +34,7 @@ const injectHtml = ref('')
         </div>
 
     </section>
-    <router-link to="/comments" class="btn btn-warning m-3">Next</router-link>
+    <router-link to="/comments" class="btn btn-warning m-3">Go to topic</router-link>
 </template>
 
 
