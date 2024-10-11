@@ -1,38 +1,31 @@
 package co.simplon.xss_vulnerabilities.services;
 
-import co.simplon.xss_vulnerabilities.dtos.InputResponseDto;
-import co.simplon.xss_vulnerabilities.entities.Instruction;
-import co.simplon.xss_vulnerabilities.entities.Response;
-import co.simplon.xss_vulnerabilities.repositories.InstructionRepository;
-import co.simplon.xss_vulnerabilities.repositories.ResponseRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import co.simplon.xss_vulnerabilities.dtos.ResponseCreate;
+import co.simplon.xss_vulnerabilities.entities.Response;
+import co.simplon.xss_vulnerabilities.repositories.ResponseRepository;
 
 @Service
 public class ResponseService {
 
-    private final InstructionRepository instructionRepository;
-    private final ResponseRepository responseRepository;
+    private final ResponseRepository repository;
 
-    public ResponseService(InstructionRepository instructionRepository, ResponseRepository responseRepository) {
-        this.instructionRepository = instructionRepository;
-        this.responseRepository = responseRepository;
+    public ResponseService(ResponseRepository responseRepository) {
+	this.repository = responseRepository;
     }
 
     public List<Response> getAllResponses() {
-        return responseRepository.findAllProjectedBy();
+	return repository.findAllProjectedBy();
     }
 
-    public List<Instruction> getAllInstructions() {
-        return instructionRepository.findAllProjectedBy();
-    }
-
-    public Response createResponse(InputResponseDto inputResponseDto) {
-        Response response = new Response();
-        response.setFirstname(inputResponseDto.name());
-        response.setResult(inputResponseDto.response());
-        return responseRepository.save(response);
+    public Response createResponse(ResponseCreate inputResponseDto) {
+	Response response = new Response();
+	response.setFirstname(inputResponseDto.firstname());
+	response.setResult(inputResponseDto.response());
+	return repository.save(response);
     }
 
 }
