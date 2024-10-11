@@ -14,6 +14,12 @@ const router = createRouter({
       name: "submit",
       component: () => import('../components/SubmitXss.vue')
     },
+    {
+      path: "/comments",
+      name: "comments",
+      component: () => import('../components/Comments.vue')
+    },
+    
   ],
 });
 

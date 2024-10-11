@@ -8,26 +8,33 @@ const injectHtml = ref('')
     <h3 class="m-3">Input XSS</h3>
     <section>
         <div class="m-3">
-            <h4>Window</h4>
+            <h4>Preview window</h4>
             <div class="window p-3">
                 {{ payload }}
                 <p v-html="injectHtml"></p>
             </div>
         </div>
-
         <div class="m-3">
-            <label for="good">GoodVue- Try a payload: </label>
-            <input type="text" id="good" class="form-control" v-model="payload">
-            <button type="submit" class="btn btn-primary mt-3">submit </button>
+            <h4>Message</h4>
+            <div class="mb-2">
+                <label for="firstname">Speak as :</label>
+                <input type="text" id="firstname" class="form-control" placeholder="Your name">
+            </div>
+
+            <div class="mb-2">
+                <label for="response">Try no-edit mode: </label>
+                <input type="text" id="response" class="form-control" placeholder="My message" v-model="payload" >
+            </div>
+
+            <div>
+                <label for="response">Try edit mode:</label>
+                <textarea name="" id="response" class="form-control"  placeholder="My message" v-model="injectHtml"></textarea>
+                <button type="submit" class="btn btn-primary mt-3">submit </button>
+            </div>
         </div>
 
-        <div class="m-3">
-            <label for="bad">BadVue- Try a payload:</label>
-            <textarea name="" id="bad" class="form-control" v-model="injectHtml"></textarea>
-            <button type="submit" class="btn btn-primary mt-3">submit </button>
-        </div>
-    </section> 
-    <router-link to="/submit-xss" class="btn btn-warning m-3">Next</router-link>
+    </section>
+    <router-link to="/comments" class="btn btn-warning m-3">Next</router-link>
 </template>
 
 
