@@ -44,7 +44,7 @@ public class XssVulnerabilitiesController {
     }
 
     @PostMapping("/response")
-    public Response createResponse(ResponseCreate inputResponseDto) {
+    public Response createResponse(@RequestBody ResponseCreate inputResponseDto) {
 	return responseService.createResponse(inputResponseDto);
     }
 

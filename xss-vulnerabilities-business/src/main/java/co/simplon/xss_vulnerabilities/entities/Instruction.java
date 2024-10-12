@@ -36,4 +36,10 @@ public class Instruction {
     public void setName(String name) {
 	this.name = name;
     }
+
+    @Override
+    public String toString() {
+	return "Instruction [id=" + id + ", name=" + name + "]";
+    }
+
 }

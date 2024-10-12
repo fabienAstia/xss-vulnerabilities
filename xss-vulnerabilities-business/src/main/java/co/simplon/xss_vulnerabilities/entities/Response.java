@@ -45,4 +45,9 @@ public class Response {
 	this.response = response;
     }
 
+    @Override
+    public String toString() {
+	return "Response [id=" + id + ", firstname=" + firstname + ", response=" + response + "]";
+    }
+
 }
