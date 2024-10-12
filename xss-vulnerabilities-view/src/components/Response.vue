@@ -1,9 +1,34 @@
 <script setup>
 import { ref } from 'vue'
+import axios from 'axios'
+
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 const payload = ref('')
 const injectHtml = ref('')
-</script>
+const firstname = ref('')
 
+const send = async () => {
+    const comment = payload.value + injectHtml.value;
+    const data = {
+        firstname: firstname.value, 
+        response: comment         
+    };
+    try {
+        const response = await axios.post('http://localhost:8080/xss/response', data);
+        if (response.status === 200) {
+            alert('Message sent');
+
+        } else {
+            throw new Error('A client or server error has occurred!');
+        }
+    } catch (err) {
+        alert('An unexpected error has occurred!');
+        console.error(err);
+    }
+};
+
+</script>
 <template>
     <h3 class="m-3">Input XSS</h3>
     <section>
@@ -18,18 +43,19 @@ const injectHtml = ref('')
             <h4>Message</h4>
             <div class="mb-2">
                 <label for="firstname">Speak as :</label>
-                <input type="text" id="firstname" class="form-control" placeholder="Your name">
+                <input type="text" id="firstname" class="form-control" placeholder="Your name" v-model="firstname">
             </div>
 
             <div class="mb-2">
                 <label for="response">Try no-edit mode: </label>
-                <input type="text" id="response" class="form-control" placeholder="My message" v-model="payload" >
+                <input type="text" id="response" class="form-control" placeholder="My message" v-model="payload">
             </div>
 
             <div>
-                <label for="response">Try edit mode:</label>
-                <textarea name="" id="response" class="form-control"  placeholder="My message" v-model="injectHtml"></textarea>
-                <button type="submit" class="btn btn-primary mt-3">submit </button>
+                <label for="response-edit">Try edit mode:</label>
+                <textarea name="" id="response-edit" class="form-control" placeholder="My message"
+                    v-model="injectHtml"></textarea>
+                <button type="submitItem" class="btn btn-primary mt-3" @click="send">submit </button>
             </div>
         </div>
 
