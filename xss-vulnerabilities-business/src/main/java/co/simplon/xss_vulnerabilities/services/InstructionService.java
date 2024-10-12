@@ -6,6 +6,7 @@ import co.simplon.xss_vulnerabilities.dtos.InstructionCreate;
 import co.simplon.xss_vulnerabilities.dtos.InstructionUpdate;
 import co.simplon.xss_vulnerabilities.entities.Instruction;
 import co.simplon.xss_vulnerabilities.repositories.InstructionRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 public class InstructionService {
     private final InstructionRepository repository;
@@ -18,14 +19,17 @@ public class InstructionService {
 	return repository.findAllProjectedBy();
     }
 
-    public Instruction createInstruction(InstructionCreate instructionCreate) {
+    public Instruction createInstruction(InstructionCreate dto) {
 	Instruction instruction = new Instruction();
-	instruction.setName(instructionCreate.name());
+	instruction.setName(dto.name());
 	return repository.save(instruction);
     }
 
-    public void updateInstruction(Long id, InstructionUpdate inputs) {
-	return;
+    public void updateInstruction(InstructionUpdate dto) {
+	Instruction instruction = repository.findById(1L)
+		.orElseThrow(() -> new EntityNotFoundException("Instruction not found"));
+	instruction.setName(dto.name());
+	repository.save(instruction);
     }
 
 }

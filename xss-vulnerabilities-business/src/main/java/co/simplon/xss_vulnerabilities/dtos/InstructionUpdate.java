@@ -1,5 +1,8 @@
 package co.simplon.xss_vulnerabilities.dtos;
 
-public record InstructionUpdate() {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record InstructionUpdate(@NotBlank @Size(max = 50) String name) {
 
 }

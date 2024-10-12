@@ -13,15 +13,15 @@ import co.simplon.xss_vulnerabilities.services.ResponseService;
 
 @RestController
 @RequestMapping("/xss")
-public class XssVulnerabilitiesController {
+public class ResponseController {
 
     private final ResponseService service;
 
-    public XssVulnerabilitiesController(ResponseService service) {
+    public ResponseController(ResponseService service) {
 	this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/comments")
     public List<Response> getAllResponses() {
 	return service.getAllResponses();
     }
