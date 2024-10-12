@@ -1,8 +1,11 @@
 package co.simplon.xss_vulnerabilities.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "t_responses")
@@ -16,27 +19,30 @@ public class Response {
     @Column(name = "id_response")
     private Long id;
 
+    @Column(name = "firstname")
     String firstname;
 
-    String result;
+    @Column(name = "response")
+    String response;
 
     public Long getId() {
-        return id;
+	return id;
     }
 
     public String getFirstname() {
-        return firstname;
+	return firstname;
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+	this.firstname = firstname;
     }
 
-    public String getResult() {
-        return result;
+    public String getResponse() {
+	return response;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setResponse(String response) {
+	this.response = response;
     }
+
 }

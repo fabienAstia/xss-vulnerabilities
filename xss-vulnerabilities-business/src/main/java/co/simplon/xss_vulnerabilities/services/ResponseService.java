@@ -1,5 +1,7 @@
 package co.simplon.xss_vulnerabilities.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,13 +20,16 @@ public class ResponseService {
     }
 
     public List<Response> getAllResponses() {
-	return repository.findAllProjectedBy();
+	List<Response> response = repository.findAllProjectedBy();
+	Collections.sort(response, Comparator.comparing(Response::getId).reversed());
+
+	return response;
     }
 
     public Response createResponse(ResponseCreate inputResponseDto) {
 	Response response = new Response();
 	response.setFirstname(inputResponseDto.firstname());
-	response.setResult(inputResponseDto.response());
+	response.setResponse(inputResponseDto.response());
 	return repository.save(response);
     }
 
