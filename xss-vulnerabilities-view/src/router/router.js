@@ -1,25 +1,24 @@
 import { createRouter, createWebHistory } from "vue-router";
-import InputXss from "../components/InputXss.vue";
+import Response from "../components/Response.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "input",
-      component: InputXss,
+      name: "home",
+      component: () => import('../components/Home.vue')
     },
     {
-      path: "/submit-xss",
-      name: "submit",
-      component: () => import('../components/SubmitXss.vue')
+      path: "/response",
+      name: "response",
+      component: Response,
     },
     {
-      path: "/comments",
-      name: "comments",
-      component: () => import('../components/Comments.vue')
-    },
-    
+      path: "/instruction",
+      name: "instruction",
+      component: () => import('../components/Instruction.vue')
+    }
   ],
 });
 
