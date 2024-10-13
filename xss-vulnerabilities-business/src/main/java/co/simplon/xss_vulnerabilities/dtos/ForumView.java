@@ -2,32 +2,31 @@ package co.simplon.xss_vulnerabilities.dtos;
 
 import java.util.List;
 
-import co.simplon.xss_vulnerabilities.entities.Instruction;
-import co.simplon.xss_vulnerabilities.entities.Response;
+import co.simplon.xss_vulnerabilities.entities.Answer;
 
 public class ForumView {
-    private Instruction instruction;
-    private List<Response> response;
+    private InstructionView instruction;
+    private List<AnswersView> answers;
 
-    public ForumView(Instruction instruction, List<Response> response) {
-	this.instruction = instruction;
-	this.response = response;
+    public ForumView(InstructionView instruction, List<AnswersView> answers) {
+        this.instruction = instruction;
+        this.answers = answers;
     }
 
-    public Instruction getInstruction() {
+    public InstructionView getInstruction(Long id) {
 	return instruction;
     }
 
-    public void setInstruction(Instruction instruction) {
+    public void setInstruction(InstructionView instruction) {
 	this.instruction = instruction;
     }
 
-    public List<Response> getResponse() {
-	return response;
+    public List<AnswersView> getResponse() {
+	return answers;
     }
 
-    public void setResponse(List<Response> response) {
-	this.response = response;
+    public void setResponse(List<AnswersView> answers) {
+	this.answers = answers;
     }
 
 }

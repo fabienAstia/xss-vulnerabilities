@@ -3,11 +3,13 @@ import { ref, onMounted } from 'vue'
 import {useRoute} from 'vue-router'
 
 
-const payload = ref('')
-const injectHtml = ref('')
-const firstname = ref('')
+// const payload = ref('')
+// const injectHtml = ref('')
+// const firstname = ref('')
 const instruction = ref({})
+const userResponse = ref({firstname: '', injectHtml: ''})
 const route = useRoute();
+
 
 // Fonction pour récupérer une instruction spécifique
 const getInstruction = async (id) => {
@@ -35,25 +37,24 @@ onMounted(() => {
 });
 
 
-// const send = async () => {
-//     const comment = payload.value + injectHtml.value;
-//     const data = {
-//         firstname: firstname.value, 
-//         response: comment         
-//     };
-//     try {
-//         const response = await axios.post('http://localhost:8080/xss/response', data);
-//         if (response.status === 200) {
-//             alert('Message sent');
-
-//         } else {
-//             throw new Error('A client or server error has occurred!');
-//         }
-//     } catch (err) {
-//         alert('An unexpected error has occurred!');
-//         console.error(err);
-//     }
-// };
+const sendResponse = async () => {
+    const options = {
+        method: 'POST',
+        headers:{'Content-type':"application/json"},
+        body: JSON.stringify(userResponse.value)
+    }
+    try {
+        const response = await fetch('http://localhost:8080/xss/response', options);
+        if (response.ok) {
+            alert('Response sent');
+        } else {
+            throw new Error('A client or server error has occurred!');
+        }
+    } catch (err) {
+        alert('An unexpected error has occurred!');
+        console.error(err);
+    }
+};
 
 </script>
 <template>
@@ -62,32 +63,26 @@ onMounted(() => {
         <div class="m-3">
             <h4 v-if="instruction.name">{{instruction.name}}</h4>
             <div class="window p-3">
-                {{ payload }}
-                <p v-html="injectHtml"></p>
+                <p v-html="userResponse.injectHtml"></p>
             </div>
         </div>
         <div class="m-3">
             <h4>Message</h4>
             <div class="mb-2">
-                <label for="firstname">Speak as :</label>
-                <input type="text" id="firstname" class="form-control" placeholder="Your name" v-model="firstname">
-            </div>
-
-            <div class="mb-2">
-                <label for="response">Try no-edit mode: </label>
-                <input type="text" id="response" class="form-control" placeholder="My message" v-model="payload">
+                <label for="firstname">Firstname :</label>
+                <input type="text" id="firstname" class="form-control" placeholder="Your name" v-model="userResponse.firstname">
             </div>
 
             <div>
-                <label for="response-edit">Try edit mode:</label>
+                <label for="response-edit">userResponse.InputXss:</label>
                 <textarea name="" id="response-edit" class="form-control" placeholder="My message"
-                    v-model="injectHtml"></textarea>
-                <button type="submitItem" class="btn btn-primary mt-3" @click="send">submit </button>
+                    v-model="userResponse.injectHtml"></textarea>
+                <button type="submitItem" class="btn btn-primary mt-3" @click="sendResponse">submit </button>
             </div>
         </div>
 
     </section>
-    <router-link to="/" class="btn btn-warning m-3">Go to topic</router-link>
+    <router-link to="/forum" class="btn btn-warning m-3"> Display Answers</router-link>
 </template>
 
 

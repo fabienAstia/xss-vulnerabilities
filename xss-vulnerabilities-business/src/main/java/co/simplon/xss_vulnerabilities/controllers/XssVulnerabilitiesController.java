@@ -1,40 +1,40 @@
 package co.simplon.xss_vulnerabilities.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import co.simplon.xss_vulnerabilities.dtos.*;
+import co.simplon.xss_vulnerabilities.services.AnswerService;
+import co.simplon.xss_vulnerabilities.services.ForumService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import co.simplon.xss_vulnerabilities.entities.Instruction;
-import co.simplon.xss_vulnerabilities.entities.Response;
 import co.simplon.xss_vulnerabilities.services.InstructionService;
-import co.simplon.xss_vulnerabilities.services.ResponseService;
 
 @RestController
 @RequestMapping("/xss")
 @CrossOrigin("*")
 public class XssVulnerabilitiesController {
 
-    private final ResponseService responseService;
+    private final AnswerService answerService;
     private final InstructionService instructionService;
+    private final ForumService forumService;
 
-    public XssVulnerabilitiesController(ResponseService responseService, InstructionService instructionService) {
-	this.responseService = responseService;
-	this.instructionService = instructionService;
+    public XssVulnerabilitiesController(AnswerService answerService, InstructionService instructionService, ForumService forumService) {
+        this.answerService = answerService;
+        this.instructionService = instructionService;
+        this.forumService = forumService;
     }
 
     @PostMapping("/response")
-    public void createResponse(@RequestBody ResponseCreate inputResponseDto) {
-	     responseService.createResponse(inputResponseDto);
+    public void createAnswer(@RequestBody AnswerCreate inputResponseDto) {
+	     answerService.createAnswer(inputResponseDto);
     }
 
-//    @GetMapping("/instruction")
-//    public InstructionView getInstruction(Long id){
-//        return instructionService.getInstruction(id);
-//    }
+    @GetMapping("/response")
+    public List<AnswersView>  getAnswers(){
+        return answerService.getAllAnswers();
+    }
 
     @GetMapping("/instruction")
     public List<InstructionView> getAllInstructions(){
@@ -54,16 +54,14 @@ public class XssVulnerabilitiesController {
 
     @PutMapping("/instruction")
     @ResponseStatus(code = HttpStatus.OK)
-        public InstructionUpdate putMethodName(@RequestBody InstructionUpdate dto) {
+    public InstructionUpdate putMethodName(@RequestBody InstructionUpdate dto) {
         return instructionService.updateInstruction(dto);
     }
 
-//    @GetMapping
-//    @ResponseStatus(code = HttpStatus.OK)
-//    public ForumView getForumView() {
-//        Optional<Instruction> instruction = instructionService.get();
-//        List<Response> response = responseService.getAllResponses();
-//
-//        return new ForumView(instruction.get(), response);
-//    }
+    @GetMapping("/forum")
+    public ForumView getForumView(){
+        return forumService.getForumView();
+
+    }
+
 }
