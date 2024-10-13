@@ -25,7 +25,9 @@ public class AnswerService {
     public void createAnswer(AnswerCreate inputResponseDto) {
 		Answer answer = new Answer();
 		answer.setFirstname(inputResponseDto.firstname());
-		answer.setAnswer(inputResponseDto.answer());
+		answer.setAnswer(inputResponseDto.response());
+        System.out.println("answer :" + answer);
+        System.out.println("inputResponseDto.response :" + inputResponseDto.response());
         repository.save(answer);
     }
 

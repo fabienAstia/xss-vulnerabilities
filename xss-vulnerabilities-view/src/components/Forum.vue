@@ -2,22 +2,25 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 
-const instruction = ref({})
+const instruction = ref({id:'', name:''})
 const answers = ref([]);
+
 const answer = ref({id: '',firstname: '', answer: ''})
 
 onMounted(() => {
     getForum();
 });
+
 const getForum = async () => {
   try {
     const response = await fetch('http://localhost:8080/xss/forum'); 
     if (response.ok) {
       const data = await response.json();
       console.log(data);
-      answers.value = data.response;
-      instruction.value = data.instruction;
-
+      answers.value = data.answers || [];
+      instruction.value.name = data.instruction.name;
+      instruction.value.id = data.instruction.id;
+   
     } else {
       console.error('Erreur lors de la récupération des données:', response.statusText);
     }
@@ -50,14 +53,14 @@ const getForum = async () => {
 
 <template>
     
-    <section class="card p-3 m-3">
-      <h3 class="m-3">{{ instruction }}</h3>
+    <section class="card p-1 m-3 bg-primary">
+      <p class="m-3 fw-medium">{{instruction.id}}-{{instruction.name}}</p> 
     </section>
     
     <section class="m-3" v-for="answer in answers" :key="answer.id">
         <div class="card p-3 bg-light">
-            <p class="fw-light fs-6 m-0 ">Response from: {{answer.firstname }} </p>
-            <p>{{ answer.answer }}</p>
+            <p class="fw-light fs-6 m-0 " >Response from: <span v-html= "answer.firstname"></span></p>
+            <p v-html="answer.answer"></p>
         </div>
     </section>
     

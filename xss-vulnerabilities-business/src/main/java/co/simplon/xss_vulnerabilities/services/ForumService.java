@@ -21,8 +21,10 @@ public class ForumService {
     }
 
     public ForumView getForumView(){
-        InstructionView instructionView = instructionRepository.findProjectedById(1L);
+        List<InstructionView> instructions = instructionRepository.findAllProjectedByOrderById();
+        InstructionView currentInstruction = instructions.get(0);
         List<AnswersView> answers = answerRepository.findAllProjectedBy();
-        return new ForumView(instructionView, answers);
+        System.out.println("instruction :" + currentInstruction);
+        return new ForumView(currentInstruction, answers);
     }
 }

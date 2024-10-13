@@ -1,6 +1,5 @@
 package co.simplon.xss_vulnerabilities.repositories;
 
-import co.simplon.xss_vulnerabilities.dtos.InstructionCreate;
 import co.simplon.xss_vulnerabilities.dtos.InstructionView;
 import co.simplon.xss_vulnerabilities.entities.Instruction;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +10,6 @@ import java.util.List;
 @Repository
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
 
-    List<InstructionView> findAllProjectedBy();
+    List<InstructionView> findAllProjectedByOrderById();
     InstructionView findProjectedById(Long id);
 }

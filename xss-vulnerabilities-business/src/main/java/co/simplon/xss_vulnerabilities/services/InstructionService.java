@@ -1,9 +1,7 @@
 package co.simplon.xss_vulnerabilities.services;
 
 import java.util.List;
-import java.util.Optional;
 
-import co.simplon.xss_vulnerabilities.dtos.ForumView;
 import co.simplon.xss_vulnerabilities.dtos.InstructionView;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +40,7 @@ public class InstructionService {
     }
 
 	public List<InstructionView> getAllInstructions() {
-		return repository.findAllProjectedBy();
+		return repository.findAllProjectedByOrderById();
 	}
 
 	public InstructionView getOneInstruction(Long id) {

@@ -2,8 +2,6 @@ package co.simplon.xss_vulnerabilities.dtos;
 
 import java.util.List;
 
-import co.simplon.xss_vulnerabilities.entities.Answer;
-
 public class ForumView {
     private InstructionView instruction;
     private List<AnswersView> answers;
@@ -13,7 +11,7 @@ public class ForumView {
         this.answers = answers;
     }
 
-    public InstructionView getInstruction(Long id) {
+    public InstructionView getInstruction() {
 	return instruction;
     }
 
@@ -21,11 +19,11 @@ public class ForumView {
 	this.instruction = instruction;
     }
 
-    public List<AnswersView> getResponse() {
+    public List<AnswersView> getAnswers() {
 	return answers;
     }
 
-    public void setResponse(List<AnswersView> answers) {
+    public void setAnswers(List<AnswersView> answers) {
 	this.answers = answers;
     }
 

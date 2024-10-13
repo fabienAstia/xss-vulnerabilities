@@ -7,7 +7,7 @@ import {useRoute} from 'vue-router'
 // const injectHtml = ref('')
 // const firstname = ref('')
 const instruction = ref({})
-const userResponse = ref({firstname: '', injectHtml: ''})
+const userResponse = ref({firstname: '', response: ''})
 const route = useRoute();
 
 
@@ -74,9 +74,9 @@ const sendResponse = async () => {
             </div>
 
             <div>
-                <label for="response-edit">userResponse.InputXss:</label>
+                <label for="response-edit">Response :</label>
                 <textarea name="" id="response-edit" class="form-control" placeholder="My message"
-                    v-model="userResponse.injectHtml"></textarea>
+                    v-model="userResponse.response"></textarea>
                 <button type="submitItem" class="btn btn-primary mt-3" @click="sendResponse">submit </button>
             </div>
         </div>

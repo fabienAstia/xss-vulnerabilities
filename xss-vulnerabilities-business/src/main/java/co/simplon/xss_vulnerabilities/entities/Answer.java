@@ -14,7 +14,6 @@ public class Answer {
     public Answer() {
     }
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_response")
@@ -31,7 +30,7 @@ public class Answer {
     }
 
     public String getFirstname() {
-	return firstname;
+	    return firstname;
     }
 
     public void setFirstname(String firstname) {
@@ -43,7 +42,7 @@ public class Answer {
     }
 
     public void setAnswer(String answer) {
-	this.answer = answer;
+	    this.answer = answer;
     }
 
     @Override
