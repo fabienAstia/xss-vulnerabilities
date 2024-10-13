@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Instruction from '../components/Instruction.vue'
 import Response from "../components/Response.vue";
 
 const router = createRouter({
@@ -9,15 +10,16 @@ const router = createRouter({
       name: "home",
       component: () => import('../components/Home.vue')
     },
-    {
-      path: "/response",
-      name: "response",
-      component: Response,
-    },
+
     {
       path: "/instruction",
       name: "instruction",
-      component: () => import('../components/Instruction.vue')
+      component: Instruction
+    },
+    {
+      path: "/response/:instructionId",
+      name: "response",
+      component: Response,
     }
   ],
 });

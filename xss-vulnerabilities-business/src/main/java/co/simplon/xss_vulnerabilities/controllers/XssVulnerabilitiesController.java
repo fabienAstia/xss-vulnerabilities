@@ -3,19 +3,11 @@ package co.simplon.xss_vulnerabilities.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import co.simplon.xss_vulnerabilities.dtos.*;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import co.simplon.xss_vulnerabilities.dtos.ForumView;
-import co.simplon.xss_vulnerabilities.dtos.InstructionUpdate;
-import co.simplon.xss_vulnerabilities.dtos.ResponseCreate;
 import co.simplon.xss_vulnerabilities.entities.Instruction;
 import co.simplon.xss_vulnerabilities.entities.Response;
 import co.simplon.xss_vulnerabilities.services.InstructionService;
@@ -34,23 +26,44 @@ public class XssVulnerabilitiesController {
 	this.instructionService = instructionService;
     }
 
-    @GetMapping
-    @ResponseStatus(code = HttpStatus.OK)
-    public ForumView getForumView() {
-	Optional<Instruction> instruction = instructionService.get();
-	List<Response> response = responseService.getAllResponses();
-
-	return new ForumView(instruction.get(), response);
+    @PostMapping("/response")
+    public void createResponse(@RequestBody ResponseCreate inputResponseDto) {
+	     responseService.createResponse(inputResponseDto);
     }
 
-    @PostMapping("/response")
-    public Response createResponse(@RequestBody ResponseCreate inputResponseDto) {
-	return responseService.createResponse(inputResponseDto);
+//    @GetMapping("/instruction")
+//    public InstructionView getInstruction(Long id){
+//        return instructionService.getInstruction(id);
+//    }
+
+    @GetMapping("/instruction")
+    public List<InstructionView> getAllInstructions(){
+        return instructionService.getAllInstructions();
+    }
+
+    @GetMapping("/instruction/{id}")
+    public InstructionView getOneInstruction(@PathVariable("id") Long id){
+        return instructionService.getOneInstruction(id);
+    }
+
+    @PostMapping("/instruction")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void createInstruction(@Valid @RequestBody InstructionCreate newInstruction) {
+        instructionService.createInstruction(newInstruction);
     }
 
     @PutMapping("/instruction")
     @ResponseStatus(code = HttpStatus.OK)
-    public InstructionUpdate putMethodName(@RequestBody InstructionUpdate dto) {
-	return instructionService.updateInstruction(dto);
+        public InstructionUpdate putMethodName(@RequestBody InstructionUpdate dto) {
+        return instructionService.updateInstruction(dto);
     }
+
+//    @GetMapping
+//    @ResponseStatus(code = HttpStatus.OK)
+//    public ForumView getForumView() {
+//        Optional<Instruction> instruction = instructionService.get();
+//        List<Response> response = responseService.getAllResponses();
+//
+//        return new ForumView(instruction.get(), response);
+//    }
 }

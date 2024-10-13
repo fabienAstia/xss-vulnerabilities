@@ -1,39 +1,66 @@
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import {useRoute} from 'vue-router'
 
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const payload = ref('')
 const injectHtml = ref('')
 const firstname = ref('')
+const instruction = ref({})
+const route = useRoute();
 
-const send = async () => {
-    const comment = payload.value + injectHtml.value;
-    const data = {
-        firstname: firstname.value, 
-        response: comment         
-    };
+// Fonction pour récupérer une instruction spécifique
+const getInstruction = async (id) => {
+    const url = `http://localhost:8080/xss/instruction/${id}`;
     try {
-        const response = await axios.post('http://localhost:8080/xss/response', data);
-        if (response.status === 200) {
-            alert('Message sent');
-
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            instruction.value = data; 
         } else {
-            throw new Error('A client or server error has occurred!');
+            console.error('Failed to fetch instruction');
         }
     } catch (err) {
-        alert('An unexpected error has occurred!');
-        console.error(err);
+        console.error('Error fetching instruction:', err);
     }
 };
 
+// Récupérer l'instruction quand le composant est monté
+onMounted(() => {
+    const instructionId = route.params.instructionId; // Obtenir l'ID depuis la route
+    if (instructionId) {
+        console.log('ID de l\'instruction récupéré:', instructionId);
+        getInstruction(instructionId); // Récupérer l'instruction avec cet ID
+    }
+});
+
+
+// const send = async () => {
+//     const comment = payload.value + injectHtml.value;
+//     const data = {
+//         firstname: firstname.value, 
+//         response: comment         
+//     };
+//     try {
+//         const response = await axios.post('http://localhost:8080/xss/response', data);
+//         if (response.status === 200) {
+//             alert('Message sent');
+
+//         } else {
+//             throw new Error('A client or server error has occurred!');
+//         }
+//     } catch (err) {
+//         alert('An unexpected error has occurred!');
+//         console.error(err);
+//     }
+// };
+
 </script>
 <template>
-    <h3 class="m-3">Input XSS</h3>
+
     <section>
         <div class="m-3">
-            <h4>Preview window</h4>
+            <h4 v-if="instruction.name">{{instruction.name}}</h4>
             <div class="window p-3">
                 {{ payload }}
                 <p v-html="injectHtml"></p>
