@@ -17,7 +17,7 @@ const router = createRouter({
       component: Instruction
     },
     {
-      path: "/response/:instructionId",
+      path: "/response/:instructionId/:instructionName",
       name: "responseById",
       component: Response,
     },

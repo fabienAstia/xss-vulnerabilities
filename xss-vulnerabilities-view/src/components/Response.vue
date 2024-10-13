@@ -3,9 +3,6 @@ import { ref, onMounted } from 'vue'
 import {useRoute} from 'vue-router'
 
 
-// const payload = ref('')
-// const injectHtml = ref('')
-// const firstname = ref('')
 const instruction = ref({})
 const userResponse = ref({firstname: '', response: ''})
 const route = useRoute();
@@ -29,10 +26,12 @@ const getInstruction = async (id) => {
 
 // Récupérer l'instruction quand le composant est monté
 onMounted(() => {
-    const instructionId = route.params.instructionId; // Obtenir l'ID depuis la route
+    const instructionId = route.params.instructionId; 
+    const instructionName = route.params.instructionName; // Obtenir l'ID depuis la route
     if (instructionId) {
         console.log('ID de l\'instruction récupéré:', instructionId);
-        getInstruction(instructionId); // Récupérer l'instruction avec cet ID
+        instruction.value = {id:instructionId, name:instructionName}; 
+        getInstruction(instructionId);
     }
 });
 
@@ -47,6 +46,7 @@ const sendResponse = async () => {
         const response = await fetch('http://localhost:8080/xss/response', options);
         if (response.ok) {
             alert('Response sent');
+            userResponse.value = { firstname: '', response: '' };
         } else {
             throw new Error('A client or server error has occurred!');
         }

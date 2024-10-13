@@ -45,27 +45,10 @@ const getInstructions =async() => {
 }
 
 //Selectionner une instruction
-const selectInstruction = (id) => {
-    console.log('Sélection de l\'instruction avec ID :', id);
-    router.push({name: 'response', params: {instructionId: id}})
+const selectInstruction = (instruction) => {
+    console.log('Sélection de l\'instruction :', instruction);
+    router.push({name: 'responseById', params: {instructionId: instruction.id, instructionName: instruction.name}})
 }
-
-// const send = async () => {
-//     const instruction = name.value.trim();
-//     console.log(instruction);
-//     try {
-//         const response = await axios.put('http://localhost:8080/xss/instruction', { name: instruction } );
-//         if (response.status === 200) {
-//             alert('Instruction sent');
-
-//         } else {
-//             throw new Error('A client or server error has occurred!');
-//         }
-//     } catch (err) {
-//         alert('An unexpected error has occurred!');
-//         console.error(err);
-//     }
-// };
 
 </script>
 
@@ -94,17 +77,17 @@ const selectInstruction = (id) => {
                     <td><span>{{instruction.name}}</span></td>
                     <td>
                         <div class="d-flex">
-                            <button @click="selectInstruction(instruction.id)" class="btn btn-primary"> Select</button>
+                            <button @click="selectInstruction(instruction)" class="btn btn-primary"> Select</button>
                             <button @click="editInstruction(instruction.id)" class="btn"><img src="../../public/bluePencil.svg" width="25px"></button> 
-                            <button @click="updateQuestion(q.id)" class="btn"><img src="../../public/orangeArrows.svg" width="25px"></button>
-                            <button @click="deleteQuestion(q.id)" class="btn"><img src="../../public/redTrash.svg" width="25px"></button>
+                            <button @click="updateQuestion(instruction.id)" class="btn"><img src="../../public/orangeArrows.svg" width="25px"></button>
+                            <button @click="deleteQuestion(instruction.id)" class="btn"><img src="../../public/redTrash.svg" width="25px"></button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </section>
-    <router-link to="/" class="btn btn-warning m-3">Go to topic</router-link>
+    <router-link to="/response/:indstructionId/:instructionName" class="btn btn-warning m-3">Go to topic</router-link>
 </template>
 
 <style scoped>
