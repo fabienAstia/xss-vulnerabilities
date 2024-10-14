@@ -20,7 +20,6 @@ const getForum = async () => {
       answers.value = data.answers || [];
       instruction.value.name = data.instruction.name;
       instruction.value.id = data.instruction.id;
-   
     } else {
       console.error('Erreur lors de la récupération des données:', response.statusText);
     }
@@ -43,7 +42,7 @@ const getForum = async () => {
     
     <section class="m-3" v-for="answer in answers" :key="answer.id">
         <div class="card p-3 bg-light">
-            <p class="fw-light fs-6 m-0 " >Response from: <strong><span v-html= "answer.firstname"></span></strong></p>
+            <p class="fw-light fs-6 m-0">Response from: <strong><span v-html= "answer.firstname"></span></strong></p>
             <p v-html="answer.answer"></p>
         </div>
     </section>
