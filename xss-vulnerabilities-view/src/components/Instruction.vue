@@ -48,6 +48,7 @@ const getInstructions =async() => {
 const selectInstruction = (instruction) => {
     console.log('Sélection de l\'instruction :', instruction);
     router.push({name: 'responseById', params: {instructionId: instruction.id, instructionName: instruction.name}})
+    router.push({name: 'forum', params: {instructionId: instruction.id, instructionName: instruction.name}})
 }
 
 </script>
@@ -87,7 +88,7 @@ const selectInstruction = (instruction) => {
             </tbody>
         </table>
     </section>
-    <router-link to="/response/:indstructionId/:instructionName" class="btn btn-warning m-3">Go to topic</router-link>
+    <router-link to="/response/:instructionId/:instructionName" class="btn btn-warning m-3">Go to topic</router-link>
 </template>
 
 <style scoped>

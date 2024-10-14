@@ -75,7 +75,7 @@ const sendResponse = async () => {
 
             <div>
                 <label for="response-edit">Response :</label>
-                <textarea name="" id="response-edit" class="form-control" placeholder="My message"
+                <textarea  id="response-edit" class="form-control" placeholder="My message"
                     v-model="userResponse.response"></textarea>
                 <button type="submitItem" class="btn btn-primary mt-3" @click="sendResponse">submit </button>
             </div>

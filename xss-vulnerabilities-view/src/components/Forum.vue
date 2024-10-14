@@ -28,43 +28,27 @@ const getForum = async () => {
     console.error('Erreur lors du fetch:', err);
   }
 };
-
-
-
-// const getResponses = async () => {
-//   try {
-//     const response = await fetch('http://localhost:8080/xss/forum'); 
-//     if (response.ok) {
-//       const data = await response.json();
-//       console.log(data);
-//       responses.value = data.response;
-//       instruction.value = data.instruction.name;
-//     } else {
-//       console.error('Erreur lors de la récupération des données:', response.statusText);
-//     }
-//   } catch (err) {
-//     console.error('Erreur lors du fetch:', err);
-//   }
-// };
-
-// const firstname = response.firstname;
-// const answer = response.answer;
+//Selectionner une instruction
+// const selectInstruction = (instruction) => {
+//     console.log('Sélection de l\'instruction :', instruction);
+//     router.push({name: 'responseById', params: {instructionId: instruction.id, instructionName: instruction.name}})
+// }
 </script>
 
 <template>
     
-    <section class="card p-1 m-3 bg-primary">
+    <section class="card p-1 m-3 bg-warning">
       <p class="m-3 fw-medium">{{instruction.id}}-{{instruction.name}}</p> 
     </section>
     
     <section class="m-3" v-for="answer in answers" :key="answer.id">
         <div class="card p-3 bg-light">
-            <p class="fw-light fs-6 m-0 " >Response from: <span v-html= "answer.firstname"></span></p>
+            <p class="fw-light fs-6 m-0 " >Response from: <strong><span v-html= "answer.firstname"></span></strong></p>
             <p v-html="answer.answer"></p>
         </div>
     </section>
     
-    <router-link to="/" class="btn btn-warning m-3">New response</router-link>
+    <router-link to="/response/:instructionId/:instructionName" class="btn btn-warning m-3">New response</router-link>
 
 </template>
 
