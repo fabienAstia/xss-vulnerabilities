@@ -3,36 +3,27 @@ import { ref, onMounted } from 'vue'
 import {useRoute} from 'vue-router'
 
 
-const instruction = ref({})
+const instruction = ref([])
 const userResponse = ref({firstname: '', response: ''})
 const route = useRoute();
 
-
-// Fonction pour récupérer une instruction spécifique
-const getInstruction = async (id) => {
-    const url = `http://localhost:8080/xss/instruction/${id}`;
-    try {
-        const response = await fetch(url);
-        if (response.ok) {
-            const data = await response.json();
-            instruction.value = data; 
-        } else {
-            console.error('Failed to fetch instruction');
-        }
-    } catch (err) {
-        console.error('Error fetching instruction:', err);
+// Fonction pour afficher la dernière instruction
+const getInstruction = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/xss'); 
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      instruction.value.name = data.name;
+    } else {
+      console.error('Erreur lors de la récupération des données:', response.statusText);
     }
+  } catch (err) {
+    console.error('Erreur lors du fetch:', err);
+  }
 };
-
-// Récupérer l'instruction quand le composant est monté
 onMounted(() => {
-    const instructionId = route.params.instructionId; 
-    const instructionName = route.params.instructionName; // Obtenir l'ID depuis la route
-    if (instructionId) {
-        console.log('ID de l\'instruction récupéré:', instructionId);
-        instruction.value = {id:instructionId, name:instructionName}; 
-        getInstruction(instructionId);
-    }
+    getInstruction();
 });
 
 
@@ -58,12 +49,11 @@ const sendResponse = async () => {
 
 </script>
 <template>
-
     <section>
         <div class="m-3">
-            <h4 v-if="instruction.name">{{instruction.name}}</h4>
+            <h4>{{instruction.name}}</h4>
             <div class="window p-3">
-                <p v-html="userResponse.injectHtml"></p>
+                <p v-html="userResponse.response"></p>
             </div>
         </div>
         <div class="m-3">
@@ -80,7 +70,6 @@ const sendResponse = async () => {
                 <button type="submitItem" class="btn btn-primary mt-3" @click="sendResponse">submit </button>
             </div>
         </div>
-
     </section>
     <router-link to="/forum" class="btn btn-warning m-3"> Display Answers</router-link>
 </template>

@@ -51,6 +51,24 @@ const selectInstruction = (instruction) => {
     router.push({name: 'forum', params: {instructionId: instruction.id, instructionName: instruction.name}})
 }
 
+const purge = async () => {
+    const url = 'http://localhost:8080/xss/instruction';
+    const options = {
+    method: 'DELETE'
+    }
+    try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+            alert('You have deleted the answers');
+        }else{
+            alert('A client or server error has occured');
+        }
+    } catch(error) {
+         console.error(error);
+    }
+}
+
+
 </script>
 
 <template>
@@ -88,7 +106,9 @@ const selectInstruction = (instruction) => {
             </tbody>
         </table>
     </section>
-    <router-link to="/response/:instructionId/:instructionName" class="btn btn-warning m-3">Go to topic</router-link>
+    <router-link to="/response/:instructionId/:instructionName" class="btn btn-warning m-1">Go to topic</router-link>
+    <router-link to="/forum" class="btn btn-warning m-1">Go to forum</router-link>
+    <button class="btn btn-danger m-1" @click="purge">PURGE</button>
 </template>
 
 <style scoped>
