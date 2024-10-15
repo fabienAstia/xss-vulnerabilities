@@ -9,9 +9,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "t_responses")
-public class Response {
+public class Answer {
 
-    public Response() {
+    public Answer() {
     }
 
     @Id
@@ -23,31 +23,31 @@ public class Response {
     String firstname;
 
     @Column(name = "response")
-    String response;
+    String answer;
 
     public Long getId() {
 	return id;
     }
 
     public String getFirstname() {
-	return firstname;
+	    return firstname;
     }
 
     public void setFirstname(String firstname) {
 	this.firstname = firstname;
     }
 
-    public String getResponse() {
-	return response;
+    public String getAnswer() {
+	return answer;
     }
 
-    public void setResponse(String response) {
-	this.response = response;
+    public void setAnswer(String answer) {
+	    this.answer = answer;
     }
 
     @Override
     public String toString() {
-	return "Response [id=" + id + ", firstname=" + firstname + ", response=" + response + "]";
+	return "Answer [id=" + id + ", firstname=" + firstname + ", response=" + answer + "]";
     }
 
 }

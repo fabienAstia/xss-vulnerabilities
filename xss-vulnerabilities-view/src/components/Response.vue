@@ -1,24 +1,43 @@
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import {useRoute} from 'vue-router'
 
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-const payload = ref('')
-const injectHtml = ref('')
-const firstname = ref('')
+const instruction = ref([])
+const userResponse = ref({firstname: '', response: ''})
+const route = useRoute();
 
-const send = async () => {
-    const comment = payload.value + injectHtml.value;
-    const data = {
-        firstname: firstname.value, 
-        response: comment         
-    };
+// Fonction pour afficher la dernière instruction
+const getInstruction = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/xss'); 
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      instruction.value.name = data.name;
+    } else {
+      console.error('Erreur lors de la récupération des données:', response.statusText);
+    }
+  } catch (err) {
+    console.error('Erreur lors du fetch:', err);
+  }
+};
+onMounted(() => {
+    getInstruction();
+});
+
+
+const sendResponse = async () => {
+    const options = {
+        method: 'POST',
+        headers:{'Content-type':"application/json"},
+        body: JSON.stringify(userResponse.value)
+    }
     try {
-        const response = await axios.post('http://localhost:8080/xss/response', data);
-        if (response.status === 200) {
-            alert('Message sent');
-
+        const response = await fetch('http://localhost:8080/xss/response', options);
+        if (response.ok) {
+            alert('Response sent');
+            userResponse.value = { firstname: '', response: '' };
         } else {
             throw new Error('A client or server error has occurred!');
         }
@@ -30,37 +49,29 @@ const send = async () => {
 
 </script>
 <template>
-    <h3 class="m-3">Input XSS</h3>
     <section>
         <div class="m-3">
-            <h4>Preview window</h4>
+            <h4>{{instruction.name}}</h4>
             <div class="window p-3">
-                {{ payload }}
-                <p v-html="injectHtml"></p>
+                <p v-html="userResponse.response"></p>
             </div>
         </div>
         <div class="m-3">
             <h4>Message</h4>
             <div class="mb-2">
-                <label for="firstname">Speak as :</label>
-                <input type="text" id="firstname" class="form-control" placeholder="Your name" v-model="firstname">
-            </div>
-
-            <div class="mb-2">
-                <label for="response">Try no-edit mode: </label>
-                <input type="text" id="response" class="form-control" placeholder="My message" v-model="payload">
+                <label for="firstname">Firstname :</label>
+                <input type="text" id="firstname" class="form-control" placeholder="Your name" v-model="userResponse.firstname">
             </div>
 
             <div>
-                <label for="response-edit">Try edit mode:</label>
-                <textarea name="" id="response-edit" class="form-control" placeholder="My message"
-                    v-model="injectHtml"></textarea>
-                <button type="submitItem" class="btn btn-primary mt-3" @click="send">submit </button>
+                <label for="response-edit">Response :</label>
+                <textarea  id="response-edit" class="form-control" placeholder="My message"
+                    v-model="userResponse.response"></textarea>
+                <button type="submitItem" class="btn btn-primary mt-3" @click="sendResponse">submit </button>
             </div>
         </div>
-
     </section>
-    <router-link to="/" class="btn btn-warning m-3">Go to topic</router-link>
+    <router-link to="/forum" class="btn btn-warning m-3"> Display Answers</router-link>
 </template>
 
 
