@@ -53,7 +53,7 @@ const sendResponse = async () => {
         <div class="m-3">
             <h4>{{instruction.name}}</h4>
             <div class="window p-3">
-                <p v-html="userResponse.injectHtml"></p>
+                <p v-html="userResponse.response"></p>
             </div>
         </div>
         <div class="m-3">
