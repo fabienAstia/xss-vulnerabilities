@@ -27,16 +27,12 @@ const getForum = async () => {
     console.error('Erreur lors du fetch:', err);
   }
 };
-//Selectionner une instruction
-// const selectInstruction = (instruction) => {
-//     console.log('Sélection de l\'instruction :', instruction);
-//     router.push({name: 'responseById', params: {instructionId: instruction.id, instructionName: instruction.name}})
-// }
+
 </script>
 
 <template>
-    
-    <section class="card p-1 m-3 bg-warning">
+    <div class="container">
+      <section class="card p-1 m-3 bg-warning">
       <p class="m-3 fw-medium">{{instruction.id}}-{{instruction.name}}</p> 
     </section>
     
@@ -48,6 +44,36 @@ const getForum = async () => {
     </section>
     
     <router-link to="/response/:instructionId/:instructionName" class="btn btn-warning m-3">New response</router-link>
+    <router-link to="/instruction" class="btn-r" >R</router-link>
+
+      
+    </div>
+
 
 </template>
 
+
+<style scoped>
+.container {
+    position: relative;
+    height: 100vh; /* S'assure que le conteneur prend toute la hauteur de la vue */
+}
+
+.btn-r {
+    position: absolute;
+    top: 50%; /* Centre verticalement */
+    right: 20px; /* Espace à droite */
+    transform: translateY(-50%); /* Centre parfaitement */
+    
+    /* Rendre le bouton invisible mais fonctionnel */
+    opacity: 0.031;
+    
+    /* Changer le curseur au survol du bouton */
+    cursor: default;
+    
+    /* Style optionnel si nécessaire (non visible à cause de l'opacité) */
+    padding: 10px 15px;
+    background-color: #ffc107;
+    border: none;
+}
+</style>
