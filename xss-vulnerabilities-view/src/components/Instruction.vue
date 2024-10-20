@@ -86,7 +86,8 @@ onMounted(() => {
         <router-link to="/forum" class="btn btn-warning m-1">Go to forum</router-link>
     </section>
 
-    <section>
+    <section class="mt-4">
+        <h5>Instructions list</h5>
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr data-bs-theme="dark">

@@ -6,6 +6,8 @@ HTML tags : strong, h1, h2..., input
 
 example : <input type="text" value="whatever" style="color:white; background-color:red"></input>
 
+>Note: Most popular js functions are onerror, onload and onmouseover
+
 ## XSS Persistent (stocked) with `onerror`
 
 - `<img src=whatever onerror=alert('youhou')>`
