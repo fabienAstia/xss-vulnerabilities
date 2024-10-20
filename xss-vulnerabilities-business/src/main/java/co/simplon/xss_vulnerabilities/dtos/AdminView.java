@@ -2,20 +2,23 @@ package co.simplon.xss_vulnerabilities.dtos;
 
 import java.util.List;
 
-public class ForumView {
-    private InstructionView instruction;
+/**
+ * Display all informations
+ */
+public class AdminView {
+    private List<InstructionView> instruction;
     private List<AnswersView> answers;
 
-    public ForumView(InstructionView instruction, List<AnswersView> answers) {
+    public AdminView(List<InstructionView> instruction, List<AnswersView> answers) {
 	this.instruction = instruction;
 	this.answers = answers;
     }
 
-    public InstructionView getInstruction() {
+    public List<InstructionView> getInstruction() {
 	return instruction;
     }
 
-    public void setInstruction(InstructionView instruction) {
+    public void setInstruction(List<InstructionView> instruction) {
 	this.instruction = instruction;
     }
 
