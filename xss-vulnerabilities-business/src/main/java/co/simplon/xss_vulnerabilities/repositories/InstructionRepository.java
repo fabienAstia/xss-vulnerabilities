@@ -11,9 +11,13 @@ import co.simplon.xss_vulnerabilities.entities.Instruction;
 @Repository
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
 
+    /**
+     * @return all instructions
+     */
     List<InstructionView> findAllProjectedByOrderById();
 
-    InstructionView findProjectedById(Long id);
-
+    /**
+     * @return last instruction
+     */
     InstructionView findTopByOrderByIdDesc();
 }

@@ -4,33 +4,32 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import co.simplon.xss_vulnerabilities.dtos.AdminView;
 import co.simplon.xss_vulnerabilities.dtos.AnswersView;
-import co.simplon.xss_vulnerabilities.dtos.ForumView;
 import co.simplon.xss_vulnerabilities.dtos.InstructionView;
 import co.simplon.xss_vulnerabilities.repositories.AnswerRepository;
 import co.simplon.xss_vulnerabilities.repositories.InstructionRepository;
 
 /**
- * Display current instruction and all responses in Forum page
+ * Display informations: Instruction and Responses
  */
 @Service
-public class ForumService {
-
+public class AdminService {
     private final InstructionRepository instructionRepository;
     private final AnswerRepository answerRepository;
 
-    public ForumService(InstructionRepository instructionRepository, AnswerRepository answerRepository) {
+    public AdminService(InstructionRepository instructionRepository, AnswerRepository answerRepository) {
 	this.instructionRepository = instructionRepository;
 	this.answerRepository = answerRepository;
     }
 
     /**
      *
-     * @return currentInstruction and answers
+     * @return all instructions and answers
      */
-    public ForumView getForumView() {
-	InstructionView currentInstruction = instructionRepository.findTopByOrderByIdDesc();
-	List<AnswersView> answers = answerRepository.findAllProjectedByOrderByIdDesc();
-	return new ForumView(currentInstruction, answers);
+    public AdminView getAdminView() {
+	List<InstructionView> allInstructions = instructionRepository.findAllProjectedByOrderById();
+	List<AnswersView> allAnswers = answerRepository.findAllProjectedByOrderByIdDesc();
+	return new AdminView(allInstructions, allAnswers);
     }
 }

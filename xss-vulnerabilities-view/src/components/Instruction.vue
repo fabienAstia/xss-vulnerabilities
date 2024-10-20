@@ -1,27 +1,28 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
-
-import axios from 'axios'
 
 const instructions = ref([])
-const instruction = ref({id: '', name: ''})
-const router = useRouter();
+const instruction = ref({ id: '', name: '' })
+const deleteAnswer = ref('');
+const answers = ref([]);
 
 
-const addInstruction = async() => {
+/**
+ * Create new instruction
+ */
+const addInstruction = async () => {
     const url = 'http://localhost:8080/xss/instruction';
     const options = {
         method: 'POST',
-        headers: {"Content-type": "application/json"},
+        headers: { "Content-type": "application/json" },
         body: JSON.stringify(instruction.value)
     }
-    try{
-        const response = await fetch (url, options);
-        if(response.ok) {
+    try {
+        const response = await fetch(url, options);
+        if (response.ok) {
             alert('You have created a new instruction.')
             instructions.value.push(instruction)
-            instruction.value.name= '';
+            instruction.value.name = '';
             getInstructions();
         } else {
             alert('A client or server error has occured');
@@ -32,42 +33,44 @@ const addInstruction = async() => {
     }
 }
 
-// AFFICHAGE des instructions
-onMounted(() => {
-  getInstructions();
-});
-const getInstructions =async() => {
+/**
+ * Display instructions and answers
+ */
+const getInformations = async () => {
     const url = 'http://localhost:8080/xss/instruction';
-    const response = await fetch (url);
+    const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
-    instructions.value = data;
+    instructions.value = data.instruction || [];
+    answers.value = data.answers || [];
 }
 
-//Selectionner une instruction
-const selectInstruction = (instruction) => {
-    console.log('Sélection de l\'instruction :', instruction);
-    router.push({name: 'responseById', params: {instructionId: instruction.id, instructionName: instruction.name}})
-    router.push({name: 'forum', params: {instructionId: instruction.id, instructionName: instruction.name}})
-}
-
-const purge = async () => {
-    const url = 'http://localhost:8080/xss/instruction';
-    const options = {
-    method: 'DELETE'
+const deleteOne = async () => {
+    const id = deleteAnswer.value;
+    if (!id) {
+        alert('No ID');
+        return;
     }
+    const url = `http://localhost:8080/xss/instruction/${id}`;
+    const options = {
+        method: 'DELETE'
+    };
     try {
         const response = await fetch(url, options);
         if (response.ok) {
-            alert('You have deleted the answers');
-        }else{
-            alert('A client or server error has occured');
+            alert(`Instruction deleted :${id}`);
+            deleteAnswer.value = ''; 
+            await getInformations();
+        } else {
+            alert('A client or server error has occurred');
         }
-    } catch(error) {
-         console.error(error);
+    } catch (error) {
+        console.error('Error:', error);
     }
-}
+};
 
+onMounted(() => {
+    getInformations();
+});
 
 </script>
 
@@ -79,36 +82,52 @@ const purge = async () => {
             <input type="text" class="form-control" placeholder="My instruction" v-model="instruction.name">
             <button type="submit" class="btn btn-primary mt-3" @click="addInstruction">submit </button>
         </div>
+        <router-link to="/response" class="btn btn-warning m-1">Go to response</router-link>
+        <router-link to="/forum" class="btn btn-warning m-1">Go to forum</router-link>
     </section>
-    
-    <section>
+
+    <section class="mt-4">
+        <h5>Instructions list</h5>
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr data-bs-theme="dark">
                     <th class="col-1">ID</th>
                     <th class="col-9">instruction</th>
-                    <th class="col-1">Operations</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(instruction, index) in instructions" :key="instruction.id" >
-                    <td><span class="col-1">{{instruction.id}}</span></td>
-                    <td><span>{{instruction.name}}</span></td>
-                    <td>
-                        <div class="d-flex">
-                            <button @click="selectInstruction(instruction)" class="btn btn-primary"> Select</button>
-                            <button @click="editInstruction(instruction.id)" class="btn"><img src="../../public/bluePencil.svg" width="25px"></button> 
-                            <button @click="updateQuestion(instruction.id)" class="btn"><img src="../../public/orangeArrows.svg" width="25px"></button>
-                            <button @click="deleteQuestion(instruction.id)" class="btn"><img src="../../public/redTrash.svg" width="25px"></button>
-                        </div>
-                    </td>
+                <tr v-for="(instruction, index) in instructions" :key="instruction.id">
+                    <td><span class="col-1">{{ instruction.id }}</span></td>
+                    <td><span>{{ instruction.name }}</span></td>
                 </tr>
             </tbody>
         </table>
     </section>
-    <router-link to="/response/:instructionId/:instructionName" class="btn btn-warning m-1">Go to topic</router-link>
-    <router-link to="/forum" class="btn btn-warning m-1">Go to forum</router-link>
-    <button class="btn btn-danger m-1" @click="purge">PURGE</button>
+
+    <section class="mt-5">
+        <h5>Delete answer</h5>
+        <div>
+            <input v-model="deleteAnswer" placeholder="ID response to delete" />
+            <button class="btn btn-danger m-1" @click="deleteOne">Delete</button>
+        </div>
+
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr data-bs-theme="dark">
+                    <th class="col-1">ID</th>
+                    <th class="col-5">Name</th>
+                    <th class="col-6">Response</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(answer, index) in answers" :key="answer.id">
+                    <td><span class="col-1">{{ answer.id }}</span></td>
+                    <td><span>{{ answer.firstname }}</span></td>
+                    <td><span>{{ answer.answer }}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 </template>
 
 <style scoped>
