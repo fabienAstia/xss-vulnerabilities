@@ -10,7 +10,7 @@ const answers = ref([]);
 /**
  * Create new instruction
  */
-const addInstruction = async () => {
+ const addInstruction = async () => {
     const url = 'http://localhost:8080/xss/instruction';
     const options = {
         method: 'POST',
@@ -23,7 +23,7 @@ const addInstruction = async () => {
             alert('You have created a new instruction.')
             instructions.value.push(instruction)
             instruction.value.name = '';
-            getInstructions();
+            await getInformations();
         } else {
             alert('A client or server error has occured');
         }
